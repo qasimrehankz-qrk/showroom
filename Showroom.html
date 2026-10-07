@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Motors | Luxury & High Performance Exotics</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#D4AF37',
+                            goldHover: '#B89628',
+                            darkBg: '#090A0F',
+                            cardBg: '#121520',
+                            border: '#23283B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #090A0F;
+            color: #E2E8F0;
+        }
+        
+        .glass-panel {
+            background: rgba(18, 21, 32, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .gold-glow:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090A0F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #23283B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+
+        .car-card-img {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .car-card:hover .car-card-img {
+            transform: scale(1.08);
+        }
+
+        /* Headlight Beam Dynamic Effect */
+        .headlight-beam {
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        /* Dynamic SVG Car Studio Customizer Styles */
+        .car-body-fill {
+            transition: fill 0.4s ease, stroke 0.4s ease;
+        }
+        .car-wheel-fill {
+            transition: fill 0.3s ease;
+        }
+        .car-window-fill {
+            transition: fill-opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-brand-darkBg text-gray-100 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-brand-border/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-gold via-yellow-400 to-amber-200 flex items-center justify-center text-black font-black text-xl shadow-lg transition-transform group-hover:scale-105">
+                        A
+                    </div>
+                    <span class="text-2xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-brand-gold">
+                        APEX <span class="text-xs uppercase tracking-widest font-normal text-brand-gold block -mt-1">Motors</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#showroom" class="text-sm font-medium hover:text-brand-gold transition-colors">Inventory</a>
+                    <a href="#customizer" class="text-sm font-medium hover:text-brand-gold transition-colors">Bespoke Studio</a>
+                    <a href="#comparison" class="text-sm font-medium hover:text-brand-gold transition-colors">Compare Lab</a>
+                    <a href="#calculator" class="text-sm font-medium hover:text-brand-gold transition-colors">Finance Calculator</a>
+                </div>
+
+                <!-- Night Headlights Toggle & CTA -->
+                <div class="flex items-center gap-4">
+                    <button id="headlightToggleBtn" class="glass-panel px-3.5 py-2 rounded-xl text-xs font-semibold text-gray-300 hover:text-white hover:border-brand-gold transition-all flex items-center gap-2">
+                        <i id="headlightIcon" class="fa-solid fa-lightbulb text-amber-400"></i>
+                        <span id="headlightText" class="hidden sm:inline">Night Headlights</span>
+                    </button>
+                    <a href="#showroom" class="hidden sm:inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-goldHover text-black font-bold text-sm px-5 py-2.5 rounded-full transition-all duration-300 shadow-md hover:shadow-brand-gold/20">
+                        <i class="fa-solid fa-car"></i> Explore Fleet
+                    </a>
+                    <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white p-2 text-xl" aria-label="Toggle Navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-brand-cardBg border-b border-brand-border px-4 pt-2 pb-6 space-y-3">
+            <a href="#showroom" class="mobile-link block py-2 text-base font-medium text-gray-300 hover:text-brand-gold">Inventory</a>
+            <a href="#customizer" class="mobile-link block py-2 text-base font-medium text-gray-300 hover:text-brand-gold">Bespoke Studio</a>
+            <a href="#comparison" class="mobile-link block py-2 text-base font-medium text-gray-300 hover:text-brand-gold">Compare Lab</a>
+            <a href="#calculator" class="mobile-link block py-2 text-base font-medium text-gray-300 hover:text-brand-gold">Finance Calculator</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden flex items-center min-h-[92vh]">
+        <!-- Hero Car Visual Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=2000&q=80" 
+                 alt="Ferrari LaFerrari Supercar" 
+                 class="w-full h-full object-cover object-center opacity-45 transform scale-105 transition-transform duration-1000">
+            
+            <!-- Headlight Beam Simulation Overlay -->
+            <div id="headlightGlow" class="headlight-beam opacity-0 absolute inset-0 bg-gradient-to-r from-amber-200/20 via-cyan-400/10 to-transparent blur-3xl mix-blend-screen"></div>
+
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-darkBg via-brand-darkBg/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-darkBg via-transparent to-brand-darkBg/80"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="max-w-3xl">
+                <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider text-brand-gold bg-brand-gold/10 border border-brand-gold/20 mb-6 uppercase">
+                    <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span> Flagship 2026 Collection
+                </span>
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-none mb-6">
+                    PURE SPEED. <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-amber-200 to-white">UNMATCHED POWER.</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-300 font-light mb-10 leading-relaxed">
+                    Welcome to Apex Motors. Discover verified luxury exotics—from the legendary Ferrari LaFerrari and Porsche 911 GT3 RS to the Tesla Model S Plaid and Lamborghini Urus Performante.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#showroom" class="bg-brand-gold hover:bg-brand-goldHover text-black font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg shadow-brand-gold/20 flex items-center gap-3 text-base">
+                        Explore Inventory <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <a href="#customizer" class="glass-panel hover:bg-white/10 text-white font-medium px-8 py-4 rounded-xl transition-all duration-300 border border-white/15 flex items-center gap-3 text-base">
+                        Launch Paint Studio
+                    </a>
+                </div>
+            </div>
+
+            <!-- Key Fleet Performance Quick Metrics Bar -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 p-6 glass-panel rounded-2xl border border-white/10">
+                <div>
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Max Output</div>
+                    <div class="text-2xl lg:text-3xl font-extrabold text-white mt-1">1,020 <span class="text-sm font-normal text-brand-gold">HP</span></div>
+                </div>
+                <div>
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Top Speed</div>
+                    <div class="text-2xl lg:text-3xl font-extrabold text-white mt-1">217 <span class="text-sm font-normal text-brand-gold">MPH</span></div>
+                </div>
+                <div>
+                    <div class="text-xs text-gray-400 uppercase font-semibold">0-60 Sprint</div>
+                    <div class="text-2xl lg:text-3xl font-extrabold text-white mt-1">1.99 <span class="text-sm font-normal text-brand-gold">SEC</span></div>
+                </div>
+                <div>
+                    <div class="text-xs text-gray-400 uppercase font-semibold">Exotic Fleet</div>
+                    <div class="text-2xl lg:text-3xl font-extrabold text-white mt-1">8 <span class="text-sm font-normal text-brand-gold">Models</span></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Showroom Section -->
+    <section id="showroom" class="py-20 relative z-10 bg-brand-darkBg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <span class="text-brand-gold text-xs font-bold uppercase tracking-widest block mb-2">Exclusive Showroom</span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white">Car Inventory</h2>
+                </div>
+                <p class="text-gray-400 max-w-md text-sm leading-relaxed">
+                    Filter by vehicle type or search by name to view verified specifications, high-res galleries, and request private test drives.
+                </p>
+            </div>
+
+            <!-- Search and Category Filters -->
+            <div class="glass-panel p-4 rounded-2xl mb-10 flex flex-col md:flex-row items-center justify-between gap-4 border border-brand-border">
+                
+                <!-- Category Tabs -->
+                <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none" id="categoryFilters">
+                    <button data-category="all" class="filter-btn active bg-brand-gold text-black px-5 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap transition-all shadow-md">
+                        All Vehicles
+                    </button>
+                    <button data-category="supercar" class="filter-btn text-gray-300 hover:bg-white/10 px-5 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap transition-all">
+                        Supercars
+                    </button>
+                    <button data-category="ev" class="filter-btn text-gray-300 hover:bg-white/10 px-5 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap transition-all">
+                        Electric EVs
+                    </button>
+                    <button data-category="sedan" class="filter-btn text-gray-300 hover:bg-white/10 px-5 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap transition-all">
+                        Sedans
+                    </button>
+                    <button data-category="suv" class="filter-btn text-gray-300 hover:bg-white/10 px-5 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap transition-all">
+                        SUVs
+                    </button>
+                </div>
+
+                <!-- Search Input Bar -->
+                <div class="relative w-full md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input type="text" id="searchInput" placeholder="Search Ferrari, Tesla, Porsche..." 
+                           class="w-full bg-black/60 border border-brand-border text-white text-sm rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:border-brand-gold transition-colors">
+                </div>
+            </div>
+
+            <!-- Dynamic Cars Grid -->
+            <div id="carsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cars generated via JavaScript -->
+            </div>
+
+            <!-- Empty Search Results -->
+            <div id="noResults" class="hidden text-center py-16 glass-panel rounded-2xl border border-brand-border">
+                <i class="fa-solid fa-car-side text-5xl text-gray-600 mb-4"></i>
+                <h3 class="text-xl font-bold text-white mb-1">No Matching Cars Found</h3>
+                <p class="text-gray-400 text-sm">Try searching for another make or adjusting your category filter.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Studio Color Customizer Section -->
+    <section id="customizer" class="py-20 relative bg-brand-cardBg/60 border-y border-brand-border/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-brand-gold text-xs font-bold uppercase tracking-widest block mb-2">Apex Bespoke Lab</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Interactive Paint Studio</h2>
+                <p class="text-gray-400 text-sm mt-2">Customize body paint finishes, alloy wheels, and window tints with live SVG render previews.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center glass-panel p-6 sm:p-10 rounded-3xl border border-brand-border">
+                
+                <!-- Dynamic SVG Vehicle Preview Frame -->
+                <div class="lg:col-span-8 relative rounded-2xl bg-gradient-to-b from-black/90 via-black/70 to-brand-cardBg p-6 min-h-[360px] sm:min-h-[440px] flex flex-col justify-between overflow-hidden border border-brand-border/60">
+                    
+                    <!-- Vehicle Model Selector Tabs -->
+                    <div class="flex items-center gap-2 overflow-x-auto pb-2 z-20">
+                        <button class="custom-model-tab active bg-brand-gold text-black font-bold px-4 py-1.5 rounded-lg text-xs" data-model="Ferrari LaFerrari">Ferrari LaFerrari</button>
+                        <button class="custom-model-tab bg-black/60 text-gray-300 hover:text-white font-medium px-4 py-1.5 rounded-lg text-xs border border-brand-border" data-model="Tesla Model S Plaid">Tesla Model S</button>
+                        <button class="custom-model-tab bg-black/60 text-gray-300 hover:text-white font-medium px-4 py-1.5 rounded-lg text-xs border border-brand-border" data-model="Lamborghini Urus">Lamborghini Urus</button>
+                        <button class="custom-model-tab bg-black/60 text-gray-300 hover:text-white font-medium px-4 py-1.5 rounded-lg text-xs border border-brand-border" data-model="Porsche 911 GT3 RS">Porsche GT3 RS</button>
+                    </div>
+
+                    <!-- Live Dynamic SVG Vehicle Rendering Canvas -->
+                    <div class="my-auto py-8 relative z-10 flex items-center justify-center">
+                        <svg id="carStudioSvg" viewBox="0 0 900 320" class="w-full h-auto max-h-[280px] drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] transition-all duration-300">
+                            <!-- Background Under-Glow -->
+                            <ellipse id="svgShadowGlow" cx="450" cy="275" rx="380" ry="25" fill="#DC2626" opacity="0.35" class="transition-all duration-500" />
+                            
+                            <!-- Car Base Chassis Shadow -->
+                            <ellipse cx="450" cy="280" rx="400" ry="20" fill="#000000" opacity="0.8" />
+
+                            <!-- Car Body Silhouette -->
+                            <path id="svgCarBody" class="car-body-fill" d="M100,220 C120,220 180,215 220,195 C260,175 320,135 410,125 C500,115 620,130 680,150 C740,170 800,185 820,220 C830,238 810,250 780,250 L140,250 C110,250 90,238 100,220 Z" fill="#DC2626" stroke="#EF4444" stroke-width="2"/>
+                            
+                            <!-- Roofline & Hood Curves -->
+                            <path class="car-body-fill" d="M260,180 C310,140 370,105 470,105 C570,105 650,135 700,170 C620,155 520,150 440,150 C350,150 290,165 260,180 Z" fill="#DC2626" opacity="0.9"/>
+                            
+                            <!-- Cabin Windows with Dynamic Tint -->
+                            <path id="svgCarWindow" class="car-window-fill" d="M330,140 C380,118 460,112 530,115 C590,118 640,138 660,155 C580,145 500,142 430,142 C370,142 340,148 330,140 Z" fill="#0F172A" fill-opacity="0.85" stroke="#334155" stroke-width="2"/>
+                            
+                            <!-- Front & Rear Headlights Glow -->
+                            <path d="M800,215 C815,215 825,225 815,230 Z" fill="#67E8F9" class="animate-pulse"/>
+                            <path d="M105,218 C95,218 90,225 95,230 Z" fill="#EF4444"/>
+
+                            <!-- Front & Rear Forged Alloy Wheels -->
+                            <g id="svgWheelRear">
+                                <circle cx="230" cy="245" r="42" fill="#000" stroke="#334155" stroke-width="4"/>
+                                <circle id="svgWheelInnerRear" class="car-wheel-fill" cx="230" cy="245" r="28" fill="#1E293B" stroke="#D4AF37" stroke-width="5"/>
+                                <circle cx="230" cy="245" r="10" fill="#000"/>
+                            </g>
+                            <g id="svgWheelFront">
+                                <circle cx="670" cy="245" r="42" fill="#000" stroke="#334155" stroke-width="4"/>
+                                <circle id="svgWheelInnerFront" class="car-wheel-fill" cx="670" cy="245" r="28" fill="#1E293B" stroke="#D4AF37" stroke-width="5"/>
+                                <circle cx="670" cy="245" r="10" fill="#000"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Current Selection Live Stats Display -->
+                    <div class="relative z-20 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-brand-border/60">
+                        <div class="flex items-center gap-3">
+                            <span id="colorBadgePreview" class="w-6 h-6 rounded-full border-2 border-white shadow-md" style="background-color: #DC2626;"></span>
+                            <div>
+                                <span class="text-[10px] text-gray-400 uppercase font-semibold block">Selected Finish</span>
+                                <span id="colorNameDisplay" class="font-bold text-white text-sm">Rosso Corsa Red</span>
+                                <span id="hexCodeDisplay" class="text-xs text-brand-gold ml-2">(#DC2626)</span>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            Wheel Finish: <span id="wheelNameDisplay" class="font-bold text-white">Apex Gold Alloy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paint & Options Control Panel -->
+                <div class="lg:col-span-4 space-y-6">
+                    
+                    <!-- Color Swatches -->
+                    <div>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-palette text-brand-gold"></i> Exterior Paint Finish
+                        </h3>
+                        <div class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-3 gap-3" id="colorPickerContainer">
+                            <!-- Generated Swatches JS -->
+                        </div>
+                    </div>
+
+                    <!-- Wheel Alloy Finish Selector -->
+                    <div class="pt-4 border-t border-brand-border">
+                        <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-notch text-brand-gold"></i> Alloy Wheel Finish
+                        </h3>
+                        <div class="grid grid-cols-2 gap-2" id="wheelPickerContainer">
+                            <button class="wheel-btn active bg-brand-gold/20 border border-brand-gold text-white py-2 px-3 rounded-xl text-xs font-semibold" data-wheel="Gold" data-color="#D4AF37">
+                                Apex Gold
+                            </button>
+                            <button class="wheel-btn bg-black/40 border border-brand-border text-gray-300 hover:text-white py-2 px-3 rounded-xl text-xs font-semibold" data-wheel="Stealth Black" data-color="#0F172A">
+                                Stealth Black
+                            </button>
+                            <button class="wheel-btn bg-black/40 border border-brand-border text-gray-300 hover:text-white py-2 px-3 rounded-xl text-xs font-semibold" data-wheel="Chrome Silver" data-color="#E2E8F0">
+                                Chrome Silver
+                            </button>
+                            <button class="wheel-btn bg-black/40 border border-brand-border text-gray-300 hover:text-white py-2 px-3 rounded-xl text-xs font-semibold" data-wheel="Rose Gold" data-color="#FB7185">
+                                Rose Gold
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Window Tint Slider -->
+                    <div class="pt-4 border-t border-brand-border">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-sun text-brand-gold"></i> Privacy Window Tint
+                            </label>
+                            <span id="tintValueDisplay" class="text-xs font-bold text-brand-gold">85% Dark</span>
+                        </div>
+                        <input type="range" id="tintRangeInput" min="20" max="95" value="85" class="w-full accent-brand-gold bg-black/60 rounded-lg cursor-pointer">
+                    </div>
+
+                    <button id="bookCustomConfigBtn" class="w-full bg-brand-gold hover:bg-brand-goldHover text-black font-bold py-3.5 rounded-xl transition-all text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-gold/20">
+                        <i class="fa-solid fa-file-signature"></i> Order This Custom Spec
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicle Comparison Section -->
+    <section id="comparison" class="py-20 relative bg-brand-darkBg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-brand-gold text-xs font-bold uppercase tracking-widest block mb-2">Performance Benchmark</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Side-by-Side Comparison</h2>
+                <p class="text-gray-400 text-sm mt-2">Select any two vehicles from our inventory to evaluate acceleration, power output, and track speeds.</p>
+            </div>
+
+            <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-brand-border">
+                
+                <!-- Vehicle Selectors Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-2">Car #1</label>
+                        <select id="compareCar1Select" class="w-full bg-black/60 border border-brand-border text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold">
+                            <!-- JS populated -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-2">Car #2</label>
+                        <select id="compareCar2Select" class="w-full bg-black/60 border border-brand-border text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold">
+                            <!-- JS populated -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Comparison Displays -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="comparisonDisplayGrid">
+                    <!-- Dynamic comparison cards rendered via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Finance Calculator -->
+    <section id="calculator" class="py-20 relative bg-brand-cardBg/40 border-t border-brand-border/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-5">
+                    <span class="text-brand-gold text-xs font-bold uppercase tracking-widest block mb-2">Tailored Ownership</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">Finance Estimator</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Calculate personalized lease and finance rates. Adjust down payments, interest rates, and loan terms to view your estimated monthly payment instantly.
+                    </p>
+                    <div class="glass-panel p-5 rounded-2xl border border-brand-border space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-brand-gold/20 flex items-center justify-center text-brand-gold">
+                                <i class="fa-solid fa-percent text-sm"></i>
+                            </div>
+                            <span class="text-xs text-gray-300">Competitive Luxury Interest Rates</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-brand-gold/20 flex items-center justify-center text-brand-gold">
+                                <i class="fa-solid fa-shield-halved text-sm"></i>
+                            </div>
+                            <span class="text-xs text-gray-300">No Pre-Payment Penalties</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Form Panel -->
+                <div class="lg:col-span-7 glass-panel p-6 sm:p-10 rounded-3xl border border-brand-border">
+                    <div class="space-y-6">
+                        
+                        <!-- Select Vehicle Dropdown -->
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 uppercase mb-2">Select Vehicle</label>
+                            <select id="calcVehicleSelect" class="w-full bg-black/60 border border-brand-border text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold">
+                                <!-- Generated JS options -->
+                            </select>
+                        </div>
+
+                        <!-- Price Input Display -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 uppercase mb-2">Vehicle Price ($USD)</label>
+                                <input type="number" id="calcVehiclePrice" class="w-full bg-black/60 border border-brand-border text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold" readonly>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 uppercase mb-2">Down Payment ($USD)</label>
+                                <input type="number" id="calcDownPayment" value="50000" step="5000" class="w-full bg-black/60 border border-brand-border text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold">
+                            </div>
+                        </div>
+
+                        <!-- Loan Duration & Interest Rate -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 uppercase mb-2">Loan Term (Months)</label>
+                                <select id="calcLoanTerm" class="w-full bg-black/60 border border-brand-border text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold">
+                                    <option value="36">36 Months (3 Years)</option>
+                                    <option value="48">48 Months (4 Years)</option>
+                                    <option value="60" selected>60 Months (5 Years)</option>
+                                    <option value="72">72 Months (6 Years)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 uppercase mb-2">Interest Rate (% APR)</label>
+                                <input type="number" id="calcInterestRate" value="4.9" step="0.1" class="w-full bg-black/60 border border-brand-border text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-brand-gold">
+                            </div>
+                        </div>
+
+                        <!-- Calculated Result Banner -->
+                        <div class="p-6 rounded-2xl bg-gradient-to-r from-brand-gold/20 via-brand-cardBg to-black border border-brand-gold/40 flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <div>
+                                <div class="text-xs text-gray-400 font-medium">Estimated Monthly Payment</div>
+                                <div id="calcMonthlyPayment" class="text-3xl sm:text-4xl font-extrabold text-brand-gold mt-1">$0</div>
+                            </div>
+                            <button id="calcApplyBtn" class="w-full sm:w-auto bg-brand-gold hover:bg-brand-goldHover text-black font-bold px-6 py-3 rounded-xl transition-all text-xs uppercase tracking-wider">
+                                Request Pre-Approval
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="about" class="bg-black border-t border-brand-border py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-brand-gold flex items-center justify-center text-black font-bold text-lg">A</div>
+                        <span class="text-xl font-extrabold text-white">APEX MOTORS</span>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        The world's premier digital showroom for luxury hypercars, exotics, and bespoke high-performance vehicles.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Showroom Flagships</h4>
+                    <ul class="text-xs text-gray-400 space-y-2">
+                        <li><i class="fa-solid fa-location-dot text-brand-gold mr-2"></i> Beverly Hills, CA</li>
+                        <li><i class="fa-solid fa-location-dot text-brand-gold mr-2"></i> Miami, FL</li>
+                        <li><i class="fa-solid fa-location-dot text-brand-gold mr-2"></i> London, UK</li>
+                        <li><i class="fa-solid fa-location-dot text-brand-gold mr-2"></i> Dubai, UAE</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Hours</h4>
+                    <ul class="text-xs text-gray-400 space-y-2">
+                        <li>Mon - Fri: 9:00 AM - 8:00 PM</li>
+                        <li>Saturday: 10:00 AM - 6:00 PM</li>
+                        <li>Sunday: Private Appointments Only</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">VIP Concierge</h4>
+                    <p class="text-xs text-gray-400 mb-3">Subscribe for private allocations and private inventory drops.</p>
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Enter email..." class="bg-brand-cardBg border border-brand-border text-xs px-3 py-2 rounded-lg text-white w-full focus:outline-none focus:border-brand-gold">
+                        <button class="bg-brand-gold text-black font-bold px-4 py-2 rounded-lg text-xs hover:bg-brand-goldHover transition-colors">Join</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-brand-border/40 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                <p>&copy; 2026 Apex Motors Inc. All Rights Reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-brand-gold">Privacy Policy</a>
+                    <a href="#" class="hover:text-brand-gold">Terms of Service</a>
+                    <a href="#" class="hover:text-brand-gold">Press Inquiries</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Vehicle Specs & Test Drive Modal -->
+    <div id="carModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+        <div class="relative w-full max-w-4xl glass-panel bg-brand-cardBg rounded-3xl border border-brand-border my-8 overflow-hidden shadow-2xl">
+            
+            <button id="closeModalBtn" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/70 hover:bg-brand-gold hover:text-black text-white flex items-center justify-center transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12">
+                
+                <div class="lg:col-span-7 bg-black p-6 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-brand-border">
+                    <div class="relative rounded-2xl overflow-hidden mb-4 bg-brand-cardBg aspect-[16/10]">
+                        <img id="modalMainImg" src="" alt="Car Image" class="w-full h-full object-cover">
+                        <span id="modalCategoryBadge" class="absolute top-3 left-3 bg-brand-gold text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                            Supercar
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3" id="modalThumbnails">
+                        <!-- Dynamic Thumbnails -->
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 p-6 flex flex-col justify-between space-y-6">
+                    <div>
+                        <h3 id="modalTitle" class="text-2xl font-black text-white mb-1">Vehicle Title</h3>
+                        <div id="modalPrice" class="text-xl font-extrabold text-brand-gold mb-4">$0</div>
+                        <p id="modalDescription" class="text-xs text-gray-400 leading-relaxed mb-6">
+                            Detailed description...
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-3 mb-6">
+                            <div class="p-3 bg-black/40 rounded-xl border border-brand-border">
+                                <span class="text-[10px] text-gray-400 uppercase font-semibold">Horsepower</span>
+                                <div id="modalPower" class="text-sm font-bold text-white mt-0.5">--</div>
+                            </div>
+                            <div class="p-3 bg-black/40 rounded-xl border border-brand-border">
+                                <span class="text-[10px] text-gray-400 uppercase font-semibold">0-60 MPH</span>
+                                <div id="modalAcceleration" class="text-sm font-bold text-white mt-0.5">--</div>
+                            </div>
+                            <div class="p-3 bg-black/40 rounded-xl border border-brand-border">
+                                <span class="text-[10px] text-gray-400 uppercase font-semibold">Top Speed</span>
+                                <div id="modalTopSpeed" class="text-sm font-bold text-white mt-0.5">--</div>
+                            </div>
+                            <div class="p-3 bg-black/40 rounded-xl border border-brand-border">
+                                <span class="text-[10px] text-gray-400 uppercase font-semibold">Drivetrain</span>
+                                <div id="modalDrivetrain" class="text-sm font-bold text-white mt-0.5">AWD</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="testDriveForm" class="space-y-3 pt-4 border-t border-brand-border">
+                        <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-2">Book Private Test Drive</h4>
+                        <input type="text" placeholder="Full Name" required class="w-full bg-black/60 border border-brand-border text-white text-xs rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-gold">
+                        <input type="email" placeholder="Email Address" required class="w-full bg-black/60 border border-brand-border text-white text-xs rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-gold">
+                        <button type="submit" class="w-full bg-brand-gold hover:bg-brand-goldHover text-black font-bold py-3 rounded-xl transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-calendar-check"></i> Submit Reservation
+                        </button>
+                    </form>
+
+                    <div id="bookingSuccessMsg" class="hidden p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-300 text-xs rounded-xl text-center font-medium">
+                        <i class="fa-solid fa-circle-check mr-1"></i> Request Received! Our concierge will contact you shortly.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Application JavaScript Engine -->
+    <script>
+        // Exact Model-Matched Verified High-Resolution Unsplash Images
+        const carInventory = [
+            {
+                id: 'ferrari-laferrari',
+                name: 'Ferrari LaFerrari',
+                category: 'supercar',
+                price: 3500000,
+                power: '950 HP',
+                numericPower: 950,
+                acceleration: '2.4s',
+                numericAccel: 2.4,
+                topSpeed: '217 mph',
+                numericSpeed: 217,
+                drivetrain: 'RWD Hybrid V12',
+                description: 'The definitive hybrid hypercar from Maranello. Combining a roaring 6.3L naturally aspirated V12 with an F1-derived HY-KERS electric motor system.',
+                image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=1200&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80'
+                ]
+            },
+            {
+                id: 'porsche-gt3rs',
+                name: 'Porsche 911 GT3 RS',
+                category: 'supercar',
+                price: 241300,
+                power: '518 HP',
+                numericPower: 518,
+                acceleration: '3.0s',
+                numericAccel: 3.0,
+                topSpeed: '184 mph',
+                numericSpeed: 184,
+                drivetrain: 'RWD Flat-6',
+                description: 'Uncompromising motorsport engineering tailored for the street. Features active DRS aerodynamics, carbon fiber monocoque elements, and high-revving 9,000 RPM performance.',
+                image: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1200&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1611821064430-0d410f92b77e?auto=format&fit=crop&w=1200&q=80'
+                ]
+            },
+            {
+                id: 'tesla-model-s-plaid',
+                name: 'Tesla Model S Plaid',
+                category: 'ev',
+                price: 89990,
+                power: '1,020 HP',
+                numericPower: 1020,
+                acceleration: '1.99s',
+                numericAccel: 1.99,
+                topSpeed: '200 mph',
+                numericSpeed: 200,
+                drivetrain: 'Tri-Motor AWD',
+                description: 'The world’s fastest accelerating production sedan. Tri-motor electric powertrain with carbon-sleeved rotors and instant full torque delivery.',
+                image: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1200&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1536700503339-1e4b06520771?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=80'
+                ]
+            },
+            {
+                id: 'audi-rs-e-tron-gt',
+                name: 'Audi RS e-tron GT',
+                category: 'ev',
+                price: 147500,
+                power: '637 HP',
+                numericPower: 637,
+                acceleration: '3.1s',
+                numericAccel: 3.1,
+                topSpeed: '155 mph',
+                numericSpeed: 155,
+                drivetrain: 'Quattro AWD EV',
+                description: 'Audi flagship electric performance grand tourer. Stunning sculpted styling, 800-volt fast-charging architecture, and precise electric Quattro vectoring.',
+                image: 'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=1200&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1200&q=80'
+                ]
+            },
+            {
+                id: 'audi-rs7-sportback',
+                name: 'Audi RS 7 Sportback',
+                category: 'sedan',
+                price: 127800,
+                power: '621 HP',
+                numericPower: 621,
+                acceleration: '3.3s',
+                numericAccel: 3.3,
+                topSpeed: '190 mph',
+                numericSpeed: 190,
+                drivetrain: 'Quattro Twin-Turbo V8',
+                description: 'A aggressive widebody four-door coupe powered by a 4.0L twin-turbocharged V8 engine with dynamic ride control and sports rear differential.',
+                image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1200&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=1200&q=80'
+                ]
+            },
+            {
+                id: 'range-rover-sv',
+                name: 'Range Rover SV Edition',
+                category: 'suv',
+                price: 234000,
+                power: '606 HP',
+                numericPower: 606,
+                acceleration: '4.3s',
+                numericAccel: 4.3,
+                topSpeed: '162 mph',
+                numericSpeed: 162,
+                drivetrain: 'AWD V8 Twin-Turbo',
+                description: 'The benchmark for ultra-luxury SUV refinement. Tailored SV ceramic controls, executive rear seat lounges, and supreme all-terrain twin-turbo performance.',
+                image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80'
+                ]
+            },
+            {
+                id: 'lamborghini-urus-performante',
+                name: 'Lamborghini Urus Performante',
+                category: 'suv',
+                price: 269885,
+                power: '657 HP',
+                numericPower: 657,
+                acceleration: '3.1s',
+                numericAccel: 3.1,
+                topSpeed: '190 mph',
+                numericSpeed: 190,
+                drivetrain: 'AWD Twin-Turbo V8',
+                description: 'Super sports car soul meets versatility. Lightweight carbon fiber bonnet, recalibrated Akrapovič titanium exhaust, and track-honed rally drive mode.',
+                image: 'https://images.unsplash.com/photo-1541348263662-e082662d82da?auto=format&fit=crop&w=1200&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1541348263662-e082662d82da?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1200&q=80'
+                ]
+            }
+        ];
+
+        // Bespoke Paint Options
+        const paintOptions = [
+            { name: 'Rosso Corsa Red', color: '#DC2626' },
+            { name: 'Stealth Onyx Black', color: '#0F172A' },
+            { name: 'Riviera Blue', color: '#0284C7' },
+            { name: 'Verde Mantis Green', color: '#16A34A' },
+            { name: 'Apex Gold Metallic', color: '#D4AF37' },
+            { name: 'Pearl Pure White', color: '#F8FAFC' }
+        ];
+
+        // Global State Variables
+        let currentCategory = 'all';
+        let currentSearchQuery = '';
+        let isHeadlightsOn = false;
+
+        // Customizer state
+        let currentPaintColor = paintOptions[0].color;
+
+        // DOM Element Cache
+        const carsGrid = document.getElementById('carsGrid');
+        const noResults = document.getElementById('noResults');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilters = document.getElementById('categoryFilters');
+        
+        // Modal Cache
+        const carModal = document.getElementById('carModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalMainImg = document.getElementById('modalMainImg');
+        const modalCategoryBadge = document.getElementById('modalCategoryBadge');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalPower = document.getElementById('modalPower');
+        const modalAcceleration = document.getElementById('modalAcceleration');
+        const modalTopSpeed = document.getElementById('modalTopSpeed');
+        const modalDrivetrain = document.getElementById('modalDrivetrain');
+        const modalThumbnails = document.getElementById('modalThumbnails');
+        const testDriveForm = document.getElementById('testDriveForm');
+        const bookingSuccessMsg = document.getElementById('bookingSuccessMsg');
+
+        // Calculator Cache
+        const calcVehicleSelect = document.getElementById('calcVehicleSelect');
+        const calcVehiclePrice = document.getElementById('calcVehiclePrice');
+        const calcDownPayment = document.getElementById('calcDownPayment');
+        const calcLoanTerm = document.getElementById('calcLoanTerm');
+        const calcInterestRate = document.getElementById('calcInterestRate');
+        const calcMonthlyPayment = document.getElementById('calcMonthlyPayment');
+
+        // Comparison Selectors Cache
+        const compareCar1Select = document.getElementById('compareCar1Select');
+        const compareCar2Select = document.getElementById('compareCar2Select');
+        const comparisonDisplayGrid = document.getElementById('comparisonDisplayGrid');
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            renderShowroom();
+            initCustomizerStudio();
+            initComparisonLab();
+            initCalculator();
+            setupEventListeners();
+        });
+
+        // Helpers
+        function formatUSD(num) {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num);
+        }
+
+        // Render Showroom Grid
+        function renderShowroom() {
+            const filtered = carInventory.filter(car => {
+                const matchesCategory = currentCategory === 'all' || car.category === currentCategory;
+                const matchesSearch = car.name.toLowerCase().includes(currentSearchQuery.toLowerCase()) || 
+                                      car.category.toLowerCase().includes(currentSearchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                carsGrid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            carsGrid.innerHTML = filtered.map(car => `
+                <div class="car-card glass-panel rounded-2xl overflow-hidden border border-brand-border flex flex-col justify-between gold-glow transition-all duration-300">
+                    <div>
+                        <!-- Image Container -->
+                        <div class="relative overflow-hidden bg-black/80 aspect-[16/10]">
+                            <img src="${car.image}" 
+                                 alt="${car.name}" 
+                                 class="car-card-img w-full h-full object-cover"
+                                 onerror="this.src='https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=1200&q=80'">
+                            <span class="absolute top-3 left-3 bg-black/80 backdrop-blur-md text-brand-gold border border-brand-gold/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                                ${car.category}
+                            </span>
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-6">
+                            <h3 class="text-xl font-black text-white mb-1">${car.name}</h3>
+                            <div class="text-2xl font-extrabold text-brand-gold mb-6">
+                                ${formatUSD(car.price)}
+                            </div>
+
+                            <!-- Performance Grid -->
+                            <div class="grid grid-cols-3 gap-2 py-3 px-3 bg-black/50 rounded-xl border border-brand-border/60 text-center mb-6">
+                                <div>
+                                    <div class="text-[10px] text-gray-400 uppercase font-medium">Power</div>
+                                    <div class="text-xs font-bold text-white mt-0.5">${car.power}</div>
+                                </div>
+                                <div class="border-x border-brand-border/40">
+                                    <div class="text-[10px] text-gray-400 uppercase font-medium">0-60 MPH</div>
+                                    <div class="text-xs font-bold text-white mt-0.5">${car.acceleration}</div>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] text-gray-400 uppercase font-medium">Top Speed</div>
+                                    <div class="text-xs font-bold text-white mt-0.5">${car.topSpeed}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="px-6 pb-6 pt-0">
+                        <button onclick="openCarModal('${car.id}')" class="w-full bg-brand-gold/10 hover:bg-brand-gold hover:text-black border border-brand-gold/30 text-brand-gold font-bold py-3 rounded-xl transition-all duration-300 text-xs uppercase tracking-wider flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-eye"></i> View Full Specs
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Specs Modal Logic
+        window.openCarModal = function(carId) {
+            const car = carInventory.find(c => c.id === carId);
+            if (!car) return;
+
+            modalTitle.innerText = car.name;
+            modalPrice.innerText = formatUSD(car.price);
+            modalDescription.innerText = car.description;
+            modalCategoryBadge.innerText = car.category;
+            modalPower.innerText = car.power;
+            modalAcceleration.innerText = car.acceleration;
+            modalTopSpeed.innerText = car.topSpeed;
+            modalDrivetrain.innerText = car.drivetrain;
+
+            modalMainImg.src = car.image;
+
+            modalThumbnails.innerHTML = car.gallery.map((imgUrl, index) => `
+                <button onclick="changeModalImage('${imgUrl}')" class="rounded-lg overflow-hidden border border-brand-border hover:border-brand-gold transition-all aspect-[16/10]">
+                    <img src="${imgUrl}" class="w-full h-full object-cover" alt="Thumbnail ${index + 1}">
+                </button>
+            `).join('');
+
+            bookingSuccessMsg.classList.add('hidden');
+            testDriveForm.reset();
+            carModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.changeModalImage = function(imgUrl) {
+            modalMainImg.src = imgUrl;
+        };
+
+        function closeModal() {
+            carModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Customizer Studio Functionality (SVG & Dynamic Colors)
+        function initCustomizerStudio() {
+            const colorContainer = document.getElementById('colorPickerContainer');
+            const svgCarBodyElements = document.querySelectorAll('.car-body-fill');
+            const svgShadowGlow = document.getElementById('svgShadowGlow');
+            const colorBadgePreview = document.getElementById('colorBadgePreview');
+            const colorNameDisplay = document.getElementById('colorNameDisplay');
+            const hexCodeDisplay = document.getElementById('hexCodeDisplay');
+            const wheelNameDisplay = document.getElementById('wheelNameDisplay');
+            const tintRangeInput = document.getElementById('tintRangeInput');
+            const tintValueDisplay = document.getElementById('tintValueDisplay');
+            const svgCarWindow = document.getElementById('svgCarWindow');
+
+            // Render paint swatches
+            colorContainer.innerHTML = paintOptions.map((finish, idx) => `
+                <button class="color-swatch-btn p-1.5 rounded-xl border-2 ${idx === 0 ? 'border-brand-gold bg-white/10' : 'border-brand-border bg-black/40'} flex flex-col items-center justify-center gap-1 hover:border-white transition-all"
+                        data-color="${finish.color}" 
+                        data-name="${finish.name}">
+                    <span class="w-7 h-7 rounded-full shadow-md border border-white/20" style="background-color: ${finish.color}"></span>
+                    <span class="text-[9px] font-semibold text-gray-300 text-center leading-tight truncate w-full">${finish.name.split(' ')[0]}</span>
+                </button>
+            `).join('');
+
+            // Paint swatch click listener
+            document.querySelectorAll('.color-swatch-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.color-swatch-btn').forEach(b => {
+                        b.classList.remove('border-brand-gold', 'bg-white/10');
+                        b.classList.add('border-brand-border', 'bg-black/40');
+                    });
+                    btn.classList.remove('border-brand-border', 'bg-black/40');
+                    btn.classList.add('border-brand-gold', 'bg-white/10');
+
+                    const hex = btn.getAttribute('data-color');
+                    const name = btn.getAttribute('data-name');
+
+                    currentPaintColor = hex;
+                    colorBadgePreview.style.backgroundColor = hex;
+                    colorNameDisplay.innerText = name;
+                    hexCodeDisplay.innerText = `(${hex})`;
+
+                    // Update SVG Car Body fills
+                    svgCarBodyElements.forEach(el => {
+                        el.style.fill = hex;
+                    });
+                    svgShadowGlow.style.fill = hex;
+                });
+            });
+
+            // Alloy Wheel Buttons
+            document.querySelectorAll('.wheel-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.wheel-btn').forEach(b => {
+                        b.classList.remove('bg-brand-gold/20', 'border-brand-gold', 'text-white');
+                        b.classList.add('bg-black/40', 'border-brand-border', 'text-gray-300');
+                    });
+                    btn.classList.add('bg-brand-gold/20', 'border-brand-gold', 'text-white');
+                    btn.classList.remove('bg-black/40', 'border-brand-border', 'text-gray-300');
+
+                    const wheelName = btn.getAttribute('data-wheel');
+                    const wheelColor = btn.getAttribute('data-color');
+                    wheelNameDisplay.innerText = wheelName;
+
+                    document.getElementById('svgWheelInnerRear').style.stroke = wheelColor;
+                    document.getElementById('svgWheelInnerFront').style.stroke = wheelColor;
+                });
+            });
+
+            // Window Tint Slider
+            tintRangeInput.addEventListener('input', (e) => {
+                const opacityVal = e.target.value;
+                tintValueDisplay.innerText = `${opacityVal}% Dark`;
+                svgCarWindow.style.fillOpacity = opacityVal / 100;
+            });
+
+            // Model Switcher Tabs inside Studio
+            document.querySelectorAll('.custom-model-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.custom-model-tab').forEach(t => {
+                        t.classList.remove('active', 'bg-brand-gold', 'text-black', 'font-bold');
+                        t.classList.add('bg-black/60', 'text-gray-300', 'font-medium');
+                    });
+                    tab.classList.add('active', 'bg-brand-gold', 'text-black', 'font-bold');
+                    tab.classList.remove('bg-black/60', 'text-gray-300', 'font-medium');
+                });
+            });
+        }
+
+        // Comparison Lab Engine
+        function initComparisonLab() {
+            // Populate select options
+            const optionsHtml = carInventory.map(car => `
+                <option value="${car.id}">${car.name}</option>
+            `).join('');
+
+            compareCar1Select.innerHTML = optionsHtml;
+            compareCar2Select.innerHTML = optionsHtml;
+
+            // Default selects
+            compareCar1Select.selectedIndex = 0; // Ferrari
+            compareCar2Select.selectedIndex = 2; // Tesla
+
+            compareCar1Select.addEventListener('change', updateComparison);
+            compareCar2Select.addEventListener('change', updateComparison);
+
+            updateComparison();
+        }
+
+        function updateComparison() {
+            const car1 = carInventory.find(c => c.id === compareCar1Select.value) || carInventory[0];
+            const car2 = carInventory.find(c => c.id === compareCar2Select.value) || carInventory[1];
+
+            comparisonDisplayGrid.innerHTML = `
+                ${renderCompareCard(car1)}
+                ${renderCompareCard(car2)}
+            `;
+        }
+
+        function renderCompareCard(car) {
+            return `
+                <div class="glass-panel p-6 rounded-2xl border border-brand-border bg-black/40 flex flex-col justify-between">
+                    <div>
+                        <div class="rounded-xl overflow-hidden aspect-[16/10] mb-4 bg-black">
+                            <img src="${car.image}" alt="${car.name}" class="w-full h-full object-cover">
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-1">${car.name}</h3>
+                        <div class="text-lg font-extrabold text-brand-gold mb-6">${formatUSD(car.price)}</div>
+
+                        <!-- Stat Comparison Meters -->
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-gray-400">Horsepower</span>
+                                    <span class="text-white">${car.power}</span>
+                                </div>
+                                <div class="w-full h-2 bg-black/80 rounded-full overflow-hidden border border-brand-border/40">
+                                    <div class="h-full bg-gradient-to-r from-amber-500 to-brand-gold rounded-full" style="width: ${Math.min(100, (car.numericPower / 1050) * 100)}%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-gray-400">0-60 MPH Speed</span>
+                                    <span class="text-white">${car.acceleration}</span>
+                                </div>
+                                <div class="w-full h-2 bg-black/80 rounded-full overflow-hidden border border-brand-border/40">
+                                    <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full" style="width: ${Math.min(100, (4.5 / car.numericAccel) * 40)}%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span class="text-gray-400">Top Velocity</span>
+                                    <span class="text-white">${car.topSpeed}</span>
+                                </div>
+                                <div class="w-full h-2 bg-black/80 rounded-full overflow-hidden border border-brand-border/40">
+                                    <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full" style="width: ${Math.min(100, (car.numericSpeed / 220) * 100)}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Finance Loan Calculator Engine
+        function initCalculator() {
+            calcVehicleSelect.innerHTML = carInventory.map(car => `
+                <option value="${car.id}">${car.name} - ${formatUSD(car.price)}</option>
+            `).join('');
+
+            calcVehicleSelect.addEventListener('change', updateCalculator);
+            calcDownPayment.addEventListener('input', updateCalculator);
+            calcLoanTerm.addEventListener('change', updateCalculator);
+            calcInterestRate.addEventListener('input', updateCalculator);
+
+            updateCalculator();
+        }
+
+        function updateCalculator() {
+            const selectedCarId = calcVehicleSelect.value;
+            const car = carInventory.find(c => c.id === selectedCarId);
+            if (!car) return;
+
+            const vehiclePrice = car.price;
+            calcVehiclePrice.value = vehiclePrice;
+
+            let downPayment = parseFloat(calcDownPayment.value) || 0;
+            if (downPayment >= vehiclePrice) {
+                downPayment = vehiclePrice * 0.2;
+                calcDownPayment.value = downPayment;
+            }
+
+            const principal = vehiclePrice - downPayment;
+            const termMonths = parseInt(calcLoanTerm.value);
+            const annualRate = parseFloat(calcInterestRate.value) / 100;
+            const monthlyRate = annualRate / 12;
+
+            if (monthlyRate > 0) {
+                const monthlyPayment = (principal * monthlyRate * Math.pow(1 + monthlyRate, termMonths)) / (Math.pow(1 + monthlyRate, termMonths) - 1);
+                calcMonthlyPayment.innerText = formatUSD(Math.round(monthlyPayment)) + '/mo';
+            } else {
+                calcMonthlyPayment.innerText = formatUSD(Math.round(principal / termMonths)) + '/mo';
+            }
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Category filter tabs
+            categoryFilters.addEventListener('click', (e) => {
+                const btn = e.target.closest('.filter-btn');
+                if (!btn) return;
+
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('bg-brand-gold', 'text-black', 'active', 'shadow-md');
+                    b.classList.add('text-gray-300');
+                });
+
+                btn.classList.add('bg-brand-gold', 'text-black', 'active', 'shadow-md');
+                btn.classList.remove('text-gray-300');
+
+                currentCategory = btn.getAttribute('data-category');
+                renderShowroom();
+            });
+
+            // Search input listener
+            searchInput.addEventListener('input', (e) => {
+                currentSearchQuery = e.target.value.trim();
+                renderShowroom();
+            });
+
+            // Night Headlight Toggle
+            document.getElementById('headlightToggleBtn').addEventListener('click', () => {
+                isHeadlightsOn = !isHeadlightsOn;
+                const glow = document.getElementById('headlightGlow');
+                const text = document.getElementById('headlightText');
+                const icon = document.getElementById('headlightIcon');
+
+                if (isHeadlightsOn) {
+                    glow.classList.remove('opacity-0');
+                    glow.classList.add('opacity-100');
+                    text.innerText = 'Headlights ON';
+                    icon.classList.replace('text-amber-400', 'text-cyan-400');
+                } else {
+                    glow.classList.remove('opacity-100');
+                    glow.classList.add('opacity-0');
+                    text.innerText = 'Night Headlights';
+                    icon.classList.replace('text-cyan-400', 'text-amber-400');
+                }
+            });
+
+            // Modal Controls
+            closeModalBtn.addEventListener('click', closeModal);
+            carModal.addEventListener('click', (e) => {
+                if (e.target === carModal) closeModal();
+            });
+
+            // Test Drive Form submit
+            testDriveForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                bookingSuccessMsg.classList.remove('hidden');
+                setTimeout(() => {
+                    closeModal();
+                }, 2500);
+            });
+
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Custom configuration order button
+            document.getElementById('bookCustomConfigBtn').addEventListener('click', () => {
+                openCarModal('ferrari-laferrari');
+            });
+
+            // Calculator Apply Button
+            document.getElementById('calcApplyBtn').addEventListener('click', () => {
+                openCarModal(calcVehicleSelect.value);
+            });
+        }
+    </script>
+</body>
+</html>
